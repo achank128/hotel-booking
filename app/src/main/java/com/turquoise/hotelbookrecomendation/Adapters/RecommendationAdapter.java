@@ -14,9 +14,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
-import com.turquoise.hotelbookrecomendation.Activities.HotelInfo;
+import com.turquoise.hotelbookrecomendation.Activities.HotelInfoActivity;
 import com.turquoise.hotelbookrecomendation.R;
+import com.turquoise.hotelbookrecomendation.model.Booking;
 import com.turquoise.hotelbookrecomendation.model.Hotel;
+import com.turquoise.hotelbookrecomendation.model.HotelResult;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -30,15 +32,18 @@ public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAd
     private final LayoutInflater inflater;
     private View view;
     private HotelViewHolder hotelViewHolder;
-    private List<Hotel> hotels;
+
+    private HotelResult hotelResult = new HotelResult();
+
+    private List<Booking> bookings;
 
     public RecommendationAdapter(Context context) {
         this.context = context;
         inflater = LayoutInflater.from(context);
     }
 
-    public void setHotels(Set<Hotel> lists) {
-        this.hotels = new ArrayList<>(lists);
+    public void setBookings(List<Booking> b) {
+        this.bookings = b;
         notifyDataSetChanged();
     }
 
@@ -46,9 +51,7 @@ public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAd
     @NonNull
     @Override
     public HotelViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         view = inflater.inflate(R.layout.hotelcard, parent, false);
-
         hotelViewHolder = new HotelViewHolder(view);
 
         return hotelViewHolder;
@@ -56,25 +59,23 @@ public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAd
 
     @Override
     public void onBindViewHolder(@NonNull final HotelViewHolder holder, final int position) {
+
         Picasso
                 .with(context)
-                .load(Uri.parse(hotels.get(position).getImageUrl()))
+                .load(Uri.parse(bookings.get(position).getHotel().getImageUrl()))
                 .into(holder.hotelImage);
 
-        holder.hotelRatings.setText(hotels.get(position).getRatings());
-        holder.tags.setText(hotels.get(position).getTags());
-        holder.hotelName.setText(hotels.get(position).getName());
-        holder.hotelViews.setText(hotels.get(position).getVisits() + "\nViews");
+        holder.hotelRatings.setText(bookings.get(position).getHotel().getRatings());
+        holder.hotelName.setText(bookings.get(position).getCheckIn().substring(0, 10));
+        holder.tags.setText(bookings.get(position).getCheckOut().substring(0, 10));
+        holder.hotelViews.setText(bookings.get(position).getHotel().getName());
+        holder.bookButton.setText("View");
         holder.bookButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int vis = Integer.valueOf(hotels.get(position).getVisits());
-                hotels.get(position).setVisits(String.valueOf(++vis));
-                setHotels(new HashSet<>(hotels));
-                Intent i = new Intent(context, HotelInfo.class);
-                i.putExtra("data", hotels.get(position));
+                Intent i = new Intent(context, HotelInfoActivity.class);
+                i.putExtra("data", bookings.get(position).getHotel());
                 context.startActivity(i);
-
             }
         });
 
@@ -82,19 +83,18 @@ public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAd
 
     @Override
     public int getItemCount() {
-        return hotels.size();
+        return bookings.size();
     }
 
 
-    public class HotelViewHolder extends RecyclerView.ViewHolder implements UpdateListener, Serializable {
+    public class HotelViewHolder extends RecyclerView.ViewHolder {
 
-        TextView hotelViews;
         ImageView hotelImage;
-        TextView hotelRatings, hotelName;
+        TextView hotelRatings, hotelName, hotelViews;
         TextView tags;
         Button bookButton;
 
-        public HotelViewHolder(@NonNull final View itemView) {
+        public HotelViewHolder(@NonNull View itemView) {
             super(itemView);
             hotelImage = itemView.findViewById(R.id.hotelImage);
             hotelRatings = itemView.findViewById(R.id.ratings);
@@ -102,12 +102,6 @@ public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAd
             tags = itemView.findViewById(R.id.tagsList);
             hotelName = itemView.findViewById(R.id.hotelName);
             hotelViews = itemView.findViewById(R.id.hotelCardViews);
-
-        }
-
-        @Override
-        public void update() {
-            notifyItemChanged(getAdapterPosition());
         }
     }
 

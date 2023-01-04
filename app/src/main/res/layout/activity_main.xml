@@ -38,10 +38,11 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:gravity="center_vertical"
-                    android:text="Hotel App"
+                    android:text="Booking.nkc"
                     android:textColor="@android:color/white" />
 
                 <TextView
+                    android:id="@+id/username"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_vertical"
@@ -51,19 +52,18 @@
                     android:drawableLeft="@drawable/ic_cart_24px"
                     android:drawableTint="@android:color/white"
                     android:gravity="center_vertical"
-                    android:text="Cart"
+                    android:text="Username"
                     android:textColor="@android:color/white" />
 
                 <TextView
                     android:id="@+id/cartCount"
                     android:layout_width="wrap_content"
-
                     android:layout_height="match_parent"
                     android:layout_gravity="end"
                     android:layout_alignParentRight="true"
                     android:clickable="true"
                     android:gravity="center_vertical"
-                    android:text="0"
+                    android:text=""
                     android:textColor="@android:color/white" />
 
             </RelativeLayout>
