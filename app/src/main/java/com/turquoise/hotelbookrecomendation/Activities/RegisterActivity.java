@@ -1,12 +1,5 @@
 package com.turquoise.hotelbookrecomendation.Activities;
 
-import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -16,40 +9,37 @@ import com.turquoise.hotelbookrecomendation.api.ApiService;
 import com.turquoise.hotelbookrecomendation.model.LoginInfo;
 import com.turquoise.hotelbookrecomendation.model.User;
 
-import static com.turquoise.hotelbookrecomendation.Utils.Utilities.newActivity;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
-    private Button login, register;
-    private TextInputLayout username;
-    private TextInputLayout password;
-
+public class RegisterActivity extends AppCompatActivity implements View.OnClickListener {
+    private Button register;
+    private TextInputLayout username, password, email, fullName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
-
+        setContentView(R.layout.activity_register);
         username = findViewById(R.id.username);
         password = findViewById(R.id.password);
-        login = findViewById(R.id.loginBtn);
+        email = findViewById(R.id.email);
+        fullName = findViewById(R.id.fullName);
         register = findViewById(R.id.reBtn);
-        register.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                newActivity(LoginActivity.this, RegisterActivity.class);
-            }
-        });
-        login.setOnClickListener(this);
+
+        register.setOnClickListener((View.OnClickListener) this);
     }
 
-
     @Override
-    public void onClick(View v) {
-        if (v.getId() == R.id.loginBtn) {
+    public void onClick(View view) {
+        if (view.getId() == R.id.reBtn) {
             if (getUsername().equals("") || getPassword().equals("")) {
                 setError(username, "Enter valid username with length greater than 5 char");
                 setError(password, "Enter valid password with length greater than 6 char");
@@ -61,34 +51,44 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     SharedPreferences.Editor edit = getSharedPreferences("cur", MODE_PRIVATE).edit();
                     edit.putString("user", getUsername());
                 }
-                callApiLogin(getUsername(), getPassword());
+
+                User user = new User(getUsername(), getPassword(), getFullName(), getEmail());
+
+                callApiRegister(user);
+
             }
         }
-
     }
 
     private void setError(@NonNull TextInputLayout username, String s) {
         username.setError(s);
     }
 
+
     private String getUsername() {
         return username.getEditText().getText().toString();
     }
+
     private String getPassword() {
         return password.getEditText().getText().toString();
     }
 
-    private void callApiLogin(String username, String password) {
+    private String getEmail() {
+        return email.getEditText().getText().toString();
+    }
 
-        User userLogin = new User(username, password);
+    private String getFullName() {
+        return fullName.getEditText().getText().toString();
+    }
 
-        ApiService.apiService.login(userLogin).enqueue(new Callback<LoginInfo>() {
+    private void callApiRegister(User user) {
+        ApiService.apiService.register(user).enqueue(new Callback<LoginInfo>() {
             @Override
             public void onResponse(Call<LoginInfo> call, Response<LoginInfo> response) {
-                Toast.makeText(LoginActivity.this, response.body().getMsg(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this, response.body().getMsg(), Toast.LENGTH_SHORT).show();
 
                 User user = response.body().getUser();
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                Intent intent = new Intent(RegisterActivity.this, MainActivity.class);
 
                 Bundle bundle = new Bundle();
                 bundle.putSerializable("user", user);
@@ -99,7 +99,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             @Override
             public void onFailure(Call<LoginInfo> call, Throwable t) {
-                Toast.makeText(LoginActivity.this, "Login Fail", Toast.LENGTH_SHORT).show();
+                Toast.makeText(RegisterActivity.this, "Register Fail", Toast.LENGTH_SHORT).show();
             }
         });
     }

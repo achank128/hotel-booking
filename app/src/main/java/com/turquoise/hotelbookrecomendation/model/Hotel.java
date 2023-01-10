@@ -6,7 +6,9 @@ import com.google.gson.annotations.SerializedName;
 import java.io.Serializable;
 
 public class Hotel implements Serializable {
-
+    @SerializedName("_id")
+    @Expose
+    private String hotelId;
     @SerializedName("name")
     @Expose
     private String name;
@@ -19,6 +21,9 @@ public class Hotel implements Serializable {
     @SerializedName("completedBookings")
     @Expose
     private String completedBookings;
+    @SerializedName("room")
+    @Expose
+    private Number room;
     @SerializedName("draftBookings")
     @Expose
     private String draftBookings;
@@ -31,6 +36,14 @@ public class Hotel implements Serializable {
     @SerializedName("imageUrl")
     @Expose
     private String imageUrl;
+
+    public String getHotelId() {
+        return hotelId;
+    }
+
+    public void setHotelId(String hotelId) {
+        this.hotelId = hotelId;
+    }
 
     public String getName() {
         return name;
@@ -62,6 +75,14 @@ public class Hotel implements Serializable {
 
     public void setCompletedBookings(String completedBookings) {
         this.completedBookings = completedBookings;
+    }
+
+    public Number getRoom() {
+        return room;
+    }
+
+    public void setRoom(Number room) {
+        this.room = room;
     }
 
     public String getDraftBookings() {

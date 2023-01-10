@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +17,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
-import com.turquoise.hotelbookrecomendation.Activities.HotelInfo;
+import com.turquoise.hotelbookrecomendation.Activities.HotelInfoActivity;
 import com.turquoise.hotelbookrecomendation.R;
 import com.turquoise.hotelbookrecomendation.model.Hotel;
 import com.turquoise.hotelbookrecomendation.model.HotelResult;
+import com.turquoise.hotelbookrecomendation.model.User;
 
 import java.util.List;
 
@@ -29,8 +31,10 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.HotelViewHol
     private final LayoutInflater inflater;
     private View view;
     private HotelViewHolder hotelViewHolder;
-    private List<Hotel> hotels;
     private HotelResult hotelResult = new HotelResult();
+
+    private List<Hotel> hotels;
+    private User user;
 
     public HotelAdapter(Context context) {
         this.context = context;
@@ -57,7 +61,6 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.HotelViewHol
     @NonNull
     @Override
     public HotelViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-
         view = inflater.inflate(R.layout.hotelcard, parent, false);
         hotelViewHolder = new HotelViewHolder(view);
 
@@ -70,7 +73,6 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.HotelViewHol
                 .with(context)
                 .load(Uri.parse(hotels.get(position).getImageUrl()))
                 .into(holder.hotelImage);
-
         holder.hotelRatings.setText(hotels.get(position).getRatings());
         holder.tags.setText(hotels.get(position).getTags());
         holder.hotelName.setText(hotels.get(position).getName());
@@ -81,12 +83,16 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.HotelViewHol
                 int vis = Integer.valueOf(hotels.get(position).getVisits());
                 hotels.get(position).setVisits(String.valueOf(++vis));
                 setHotels(hotels);
-                Intent i = new Intent(context, HotelInfo.class);
-                i.putExtra("hotels", hotelResult);
-                i.putExtra("pos", position);
-                i.putExtra("data", hotels.get(position));
-                context.startActivity(i);
+                Intent intent = new Intent(context, HotelInfoActivity.class);
+                intent.putExtra("hotels", hotelResult);
+                intent.putExtra("pos", position);
+                intent.putExtra("data", hotels.get(position));
 
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("user", user);
+                intent.putExtras(bundle);
+
+                context.startActivity(intent);
             }
         });
 
@@ -102,7 +108,6 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.HotelViewHol
 
         ImageView hotelImage;
         TextView hotelRatings, hotelName, hotelViews;
-
         TextView tags;
         Button bookButton;
 
@@ -114,10 +119,10 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.HotelViewHol
             tags = itemView.findViewById(R.id.tagsList);
             hotelName = itemView.findViewById(R.id.hotelName);
             hotelViews = itemView.findViewById(R.id.hotelCardViews);
-
-
         }
     }
 
-
+    public void setUser(User user) {
+        this.user = user;
+    }
 }

@@ -5,7 +5,7 @@
     android:id="@+id/activity_hotel_info"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Activities.HotelInfo">
+    tools:context=".Activities.HotelInfoActivity">
 
 
     <com.google.android.material.appbar.AppBarLayout
@@ -57,6 +57,30 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="monospace"
+                    android:gravity="center"
+                    android:text="Hotel"
+                    android:id="@+id/nameHotel"
+                    android:layout_marginBottom="6dp"
+                    android:textSize="28sp"
+                    android:textColor="@color/black"
+                    />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="monospace"
+                    android:gravity="center"
+                    android:text="tags"
+                    android:id="@+id/tagText"
+                    android:layout_marginLeft="4dp"
+                    android:textSize="18sp"
+                    />
+
                <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
@@ -67,23 +91,14 @@
                     android:layout_marginLeft="4dp"
                     android:textSize="18sp"
                      />
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:fontFamily="monospace"
-                    android:gravity="center"
-                    android:text="drafts"
-                    android:id="@+id/draftText"
-                    android:layout_marginLeft="4dp"
-                    android:textSize="18sp"
-                    />
+
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:fontFamily="monospace"
                     android:gravity="center"
-                    android:text="completed"
+                    android:text="room"
                     android:id="@+id/completedText"
                     android:layout_marginLeft="4dp"
                     android:textSize="18sp"
@@ -113,7 +128,40 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="@android:color/white"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
+            android:text="Check In:"
+            android:textSize="20sp" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/checkInDate"
+                style="?android:spinnerStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginBottom="4dp"
+                android:text="12/12/2022"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+            <TextView
+                android:id="@+id/checkOutDate"
+                style="?android:spinnerStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_marginLeft="32dp"
+                android:layout_marginBottom="4dp"
+                android:text="12/26/2022"
+                android:textColor="@color/black"
+                android:textSize="20sp" />
+        </LinearLayout>
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/confirmBooking"
             style="?android:attr/buttonBarButtonStyle"
@@ -123,18 +171,6 @@
             android:layout_marginTop="-6dp"
             android:gravity="center"
             android:text="Book"
-            android:textAllCaps="false"
-            android:textSize="20sp"
-            app:cornerRadius="20dp" />
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/draftBooking"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="350dp"
-            android:layout_height="60dp"
-            android:layout_marginTop="-6dp"
-            android:gravity="center"
-            android:text="Draft Book"
-            android:layout_gravity="center"
             android:textAllCaps="false"
             android:textSize="20sp"
             app:cornerRadius="20dp" />
