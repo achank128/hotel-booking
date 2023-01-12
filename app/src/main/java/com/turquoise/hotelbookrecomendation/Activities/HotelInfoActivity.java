@@ -47,8 +47,6 @@ public class HotelInfoActivity extends AppCompatActivity {
     int pos;
     HotelResult hotelResult;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +75,9 @@ public class HotelInfoActivity extends AppCompatActivity {
         super.onResume();
 
         hotel = (Hotel) getIntent().getExtras().getSerializable("data");
+        String checkInDate = (String) getIntent().getExtras().getSerializable("checkIn");
+        String checkOutDate = (String) getIntent().getExtras().getSerializable("checkOut");
+
 
         hotelResult = new Gson().fromJson(getHotels(), HotelResult.class);
         pos = getIntent().getExtras().getInt("pos");
@@ -92,30 +93,38 @@ public class HotelInfoActivity extends AppCompatActivity {
         views.setText(hotelResult.getHotels().get(pos).getVisits() + " views");
         tag.setText(hotelResult.getHotels().get(pos).getTags());
         completed.setText(hotelResult.getHotels().get(pos).getRoom() + " rooms");
-        //Button
-        book.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                setBooking(hotelResult.getHotels().get(pos).getHotelId());
-                finish();
-            }
-        });
-        //date
-        checkIn.setText(getTodaysDate());
-        checkIn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                checkInDatePicker.show();
-            }
-        });
 
-        checkOut.setText(getTodaysDate());
-        checkOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                checkOutDatePicker.show();
-            }
-        });
+        if(checkInDate != null || checkOutDate != null){
+            checkIn.setText(checkInDate.substring(0, 10));
+            checkOut.setText(checkOutDate.substring(0, 10));
+            book.setEnabled(false);
+            book.setText("Booked");
+        }else{
+            //Button
+            book.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    setBooking(hotelResult.getHotels().get(pos).getHotelId());
+                    finish();
+                }
+            });
+            //date
+            checkIn.setText(getTodaysDate());
+            checkIn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    checkInDatePicker.show();
+                }
+            });
+
+            checkOut.setText(getTodaysDate());
+            checkOut.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    checkOutDatePicker.show();
+                }
+            });
+        }
 
     }
 

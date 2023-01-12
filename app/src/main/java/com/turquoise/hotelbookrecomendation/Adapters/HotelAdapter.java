@@ -55,7 +55,6 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.HotelViewHol
         Gson gson = new Gson();
         spe.putString("data", gson.toJson(hotelResult));
         spe.apply();
-
     }
 
     @NonNull

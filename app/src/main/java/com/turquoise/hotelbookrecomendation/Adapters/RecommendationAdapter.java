@@ -73,9 +73,11 @@ public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAd
         holder.bookButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(context, HotelInfoActivity.class);
-                i.putExtra("data", bookings.get(position).getHotel());
-                context.startActivity(i);
+                Intent intent = new Intent(context, HotelInfoActivity.class);
+                intent.putExtra("data", bookings.get(position).getHotel());
+                intent.putExtra("checkIn", bookings.get(position).getCheckIn());
+                intent.putExtra("checkOut", bookings.get(position).getCheckOut());
+                context.startActivity(intent);
             }
         });
 

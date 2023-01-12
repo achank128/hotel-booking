@@ -22,7 +22,8 @@ public interface ApiService {
     Gson gson = new GsonBuilder().setDateFormat("dd-MM-yyyy").create();
 
     ApiService apiService = new Retrofit.Builder()
-            .baseUrl("https://hotel-booking-app-bevl.onrender.com/api/")
+            .baseUrl("http://192.168.1.25:5000/api/")
+//            .baseUrl("https://hotel-booking-app-bevl.onrender.com/api/")
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
             .create(ApiService.class);
