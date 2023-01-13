@@ -36,6 +36,11 @@ public class Hotel implements Serializable {
     @SerializedName("imageUrl")
     @Expose
     private String imageUrl;
+    @SerializedName("price")
+    @Expose
+    private int price;
+
+
 
     public String getHotelId() {
         return hotelId;
@@ -117,4 +122,11 @@ public class Hotel implements Serializable {
         this.imageUrl = imageUrl;
     }
 
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
 }

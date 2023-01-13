@@ -58,12 +58,12 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/nameHotel"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:fontFamily="monospace"
                     android:gravity="center"
                     android:text="Hotel"
-                    android:id="@+id/nameHotel"
                     android:layout_marginBottom="6dp"
                     android:textSize="28sp"
                     android:textColor="@color/black"
@@ -71,21 +71,21 @@
 
 
                 <TextView
+                    android:id="@+id/tagText"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:fontFamily="monospace"
                     android:gravity="center"
                     android:text="tags"
-                    android:id="@+id/tagText"
                     android:layout_marginLeft="4dp"
                     android:textSize="18sp"
                     />
 
                <TextView
+                    android:id="@+id/views"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:fontFamily="monospace"
-                    android:id="@+id/views"
                     android:gravity="center"
                     android:text="views"
                     android:layout_marginLeft="4dp"
@@ -94,16 +94,26 @@
 
 
                 <TextView
+                    android:id="@+id/completedText"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:fontFamily="monospace"
                     android:gravity="center"
                     android:text="room"
-                    android:id="@+id/completedText"
                     android:layout_marginLeft="4dp"
                     android:textSize="18sp"
                     />
 
+                <TextView
+                    android:id="@+id/priceText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="monospace"
+                    android:gravity="center"
+                    android:text="VND 1200000"
+                    android:layout_marginLeft="4dp"
+                    android:textSize="18sp"
+                    />
 
             </LinearLayout>
             <LinearLayout
@@ -137,6 +147,8 @@
             android:layout_marginLeft="32dp"
             android:text="Check In:"
             android:textSize="20sp" />
+
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -146,7 +158,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_marginLeft="32dp"
-                android:layout_marginBottom="4dp"
                 android:text="12/12/2022"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
@@ -156,11 +167,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="60dp"
                 android:layout_marginLeft="32dp"
-                android:layout_marginBottom="4dp"
                 android:text="12/26/2022"
                 android:textColor="@color/black"
                 android:textSize="20sp" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/totalText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="32dp"
+            android:textColor="@color/black"
+            android:text="Total: 0"
+            android:textSize="22sp"
+            android:layout_marginBottom="16dp"
+
+            />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/confirmBooking"

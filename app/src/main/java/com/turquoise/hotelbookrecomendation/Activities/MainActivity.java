@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements Serializable {
     private void setupViewPager(final ViewPager viewPager) {
         final ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         viewPagerAdapter.addFrag(new Home(), "Home");
-        viewPagerAdapter.addFrag(new Recommendation(), "Recommendations");
+        viewPagerAdapter.addFrag(new Recommendation(), "Booking");
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
