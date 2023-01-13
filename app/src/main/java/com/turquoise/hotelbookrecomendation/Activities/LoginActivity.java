@@ -67,9 +67,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
-    private void setError(@NonNull TextInputLayout username, String s) {
-        username.setError(s);
-    }
 
     private String getUsername() {
         return username.getEditText().getText().toString();
@@ -78,9 +75,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         return password.getEditText().getText().toString();
     }
 
-    private void callApiLogin(String username, String password) {
+    private void callApiLogin(String usernameData, String passwordData) {
 
-        User userLogin = new User(username, password);
+        User userLogin = new User(usernameData, passwordData);
 
         ApiService.apiService.login(userLogin).enqueue(new Callback<LoginInfo>() {
             @Override
@@ -99,8 +96,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             @Override
             public void onFailure(Call<LoginInfo> call, Throwable t) {
-                Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "Username or Password incorrect", Toast.LENGTH_SHORT).show();
             }
         });
     }
+
+    private void setError(@NonNull TextInputLayout username, String s) {
+        username.setError(s);
+    }
+
 }

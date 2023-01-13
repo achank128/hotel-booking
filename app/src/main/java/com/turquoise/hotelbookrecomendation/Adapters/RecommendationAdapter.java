@@ -9,12 +9,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 import com.turquoise.hotelbookrecomendation.Activities.HotelInfoActivity;
+import com.turquoise.hotelbookrecomendation.Activities.MainActivity;
 import com.turquoise.hotelbookrecomendation.R;
 import com.turquoise.hotelbookrecomendation.model.Booking;
 import com.turquoise.hotelbookrecomendation.model.Hotel;
@@ -77,6 +79,7 @@ public class RecommendationAdapter extends RecyclerView.Adapter<RecommendationAd
                 intent.putExtra("data", bookings.get(position).getHotel());
                 intent.putExtra("checkIn", bookings.get(position).getCheckIn());
                 intent.putExtra("checkOut", bookings.get(position).getCheckOut());
+                intent.putExtra("total", String.valueOf(bookings.get(position).getTotal()));
                 context.startActivity(intent);
             }
         });

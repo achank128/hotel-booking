@@ -37,15 +37,20 @@ public class HotelInfoActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private ImageView hotelImage;
-    private TextView hotelName, hotelDesc, views, tag, completed;
+    private TextView hotelName, hotelDesc, views, tag, completed, price;
     private Button book;
-    private TextView checkIn, checkOut;
+    private TextView checkIn, checkOut, total;
     private RecommendationAdapter.HotelViewHolder hotelViewHolder;
     private DatePickerDialog checkInDatePicker, checkOutDatePicker;
     Hotel hotel;
     User user;
     int pos;
     HotelResult hotelResult;
+    private int checkInDay = 0;
+    private int priceHotel = 0;
+    private int totalPrice;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,8 +65,10 @@ public class HotelInfoActivity extends AppCompatActivity {
         views = findViewById(R.id.views);
         tag = findViewById(R.id.tagText);
         completed = findViewById(R.id.completedText);
+        price = findViewById(R.id.priceText);
         checkIn = findViewById(R.id.checkInDate);
         checkOut = findViewById(R.id.checkOutDate);
+        total = findViewById(R.id.totalText);
         initCkIDatePicker();
         initCkODatePicker();
 
@@ -77,6 +84,7 @@ public class HotelInfoActivity extends AppCompatActivity {
         hotel = (Hotel) getIntent().getExtras().getSerializable("data");
         String checkInDate = (String) getIntent().getExtras().getSerializable("checkIn");
         String checkOutDate = (String) getIntent().getExtras().getSerializable("checkOut");
+        String totalBooking = (String) getIntent().getExtras().getSerializable("total");
 
 
         hotelResult = new Gson().fromJson(getHotels(), HotelResult.class);
@@ -93,10 +101,15 @@ public class HotelInfoActivity extends AppCompatActivity {
         views.setText(hotelResult.getHotels().get(pos).getVisits() + " views");
         tag.setText(hotelResult.getHotels().get(pos).getTags());
         completed.setText(hotelResult.getHotels().get(pos).getRoom() + " rooms");
+        price.setText("VND " + hotelResult.getHotels().get(pos).getPrice());
+        priceHotel = hotelResult.getHotels().get(pos).getPrice();
 
         if(checkInDate != null || checkOutDate != null){
             checkIn.setText(checkInDate.substring(0, 10));
             checkOut.setText(checkOutDate.substring(0, 10));
+            if(totalBooking != null){
+                total.setText("Total: " + totalBooking + ".VND");
+            }
             book.setEnabled(false);
             book.setText("Booked");
         }else{
@@ -135,6 +148,7 @@ public class HotelInfoActivity extends AppCompatActivity {
                 month = month + 1;
                 String date = makeDateString(day, month, year);
                 checkIn.setText(date);
+                checkInDay = day;
             }
         };
         Calendar cal = Calendar.getInstance();
@@ -154,6 +168,8 @@ public class HotelInfoActivity extends AppCompatActivity {
                 month = month + 1;
                 String date = makeDateString(day, month, year);
                 checkOut.setText(date);
+                totalPrice = (day - checkInDay)*priceHotel;
+                total.setText("Total: " + String.valueOf(totalPrice) + ".VND");
             }
         };
         Calendar cal = Calendar.getInstance();
@@ -199,6 +215,7 @@ public class HotelInfoActivity extends AppCompatActivity {
         booking.setHotelId(hotelId);
         booking.setCheckIn(checkIn.getText().toString());
         booking.setCheckOut(checkOut.getText().toString());
+        booking.setTotal(totalPrice);
         callApiBookHotel(booking);
     }
 
