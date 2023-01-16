@@ -49,8 +49,6 @@
                     android:layout_toLeftOf="@id/cartCount"
                     android:layout_marginRight="5dp"
                     android:clickable="true"
-                    android:drawableLeft="@drawable/ic_cart_24px"
-                    android:drawableTint="@android:color/white"
                     android:gravity="center_vertical"
                     android:text="Username"
                     android:textColor="@android:color/white" />
